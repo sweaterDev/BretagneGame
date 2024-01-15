@@ -1,0 +1,129 @@
+import pygame
+import sys
+import random
+
+# Initialisation de Pygame
+pygame.init()
+
+# Constantes
+WIDTH, HEIGHT = 1920, 1080
+GROUND_HEIGHT = 90
+FPS = 60
+
+# Couleurs
+WHITE = (255, 255, 255)
+
+# Création de la fenêtre
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Simple Platformer")
+
+# Chargement des images
+background_img = pygame.image.load("background.jpg")
+player_img = pygame.image.load("player.png")
+object_img = pygame.image.load("object.png")
+life_img = pygame.image.load("life.png")
+
+# Redimensionnement des images
+background_img = pygame.transform.scale(background_img, (WIDTH, HEIGHT))
+player_img = pygame.transform.scale(player_img, (150, 180))
+object_img = pygame.transform.scale(object_img, (170, 170))
+life_img = pygame.transform.scale(life_img, (80, 80))
+
+player_rect = player_img.get_rect(midbottom=(WIDTH // 2, HEIGHT - GROUND_HEIGHT))
+
+# Variables du joueur
+player_speed = 10
+player_jump = 20
+player_y_speed = 0
+on_ground = False
+
+# Variables des objets
+objects = []
+object_speed = 3
+object_frequency = 50
+object_counter = 0
+score = 0
+
+# Variables de temps et de vies
+current_time = 0
+total_time = 60  # Décompte de 60 secondes
+lives = 3
+
+font = pygame.font.Font(None, 36)
+
+# Boucle principale du jeu
+while total_time > 0:  # Décompte de 1 minute
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and player_rect.left > 0:
+        player_rect.x -= player_speed
+    if keys[pygame.K_RIGHT] and player_rect.right < WIDTH:
+        player_rect.x += player_speed
+    if keys[pygame.K_SPACE] and on_ground:
+        player_y_speed = -player_jump
+        on_ground = False
+
+    # Gravité
+    if not on_ground:
+        player_y_speed += 1
+    player_rect.y += player_y_speed
+
+    # Vérification si le joueur est sur le sol
+    if player_rect.bottom >= HEIGHT - GROUND_HEIGHT:
+        player_rect.bottom = HEIGHT - GROUND_HEIGHT
+        on_ground = True
+
+    # Gestion des objets
+    object_counter += 1
+    if object_counter == object_frequency:
+        object_counter = 0
+        object_rect = object_img.get_rect(midtop=(random.randint(0, WIDTH - object_img.get_width()), 0))
+        objects.append(object_rect)
+
+    for obj in objects:
+        obj.y += object_speed
+        if obj.colliderect(player_rect):
+            objects.remove(obj)
+            score += 10  # Augmentation du score à chaque objet récupéré
+            # Ajoutez ici le code pour gérer la récupération des objets et les effets sur le joueur
+
+        if obj.y > 870:  # Modification ici pour que les objets disparaissent à la couche 90
+            objects.remove(obj)
+
+    # Mise à jour du temps
+    current_time += 1
+    if current_time == FPS:
+        current_time = 0
+        total_time -= 1  # Décrémentation du temps
+
+    # Dessin de l'arrière-plan
+    screen.blit(background_img, (0, 0))
+
+    # Dessin des objets
+    for obj in objects:
+        screen.blit(object_img, obj)
+
+    # Dessin du joueur
+    screen.blit(player_img, player_rect)
+
+    # Affichage du temps et des vies
+    time_text = font.render(f"Time: {total_time}s", True, WHITE)
+    screen.blit(time_text, (80, 30))
+
+    # Affichage du score
+    score_text = font.render(f"Score: {score}", True, WHITE)
+    screen.blit(score_text, (80, 70))
+
+    for i in range(lives):
+        screen.blit(life_img, (WIDTH - 120 - i * 100, 10))
+
+    # Mise à jour de l'écran
+    pygame.display.flip()
+
+    # Limite de FPS
+    pygame.time.Clock().tick(FPS)
+
