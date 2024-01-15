@@ -1,8 +1,9 @@
 from pygame import *
 from pygame.sprite import *
-from Objet import Objet
+from .Objet import Objet
 class ObjetMalus(Objet):
-    def __init__(self):  
-        Objet.__init__(self)
-        self.image = image.load("filename").convert()
-       
+    def __init__(self, position_initiale, vitesse):
+        super().__init__("images\malus.png", position_initiale, vitesse)
+        self.son = pygame.mixer.Sound("sons\degats.mp3")
+    def action(self, joueur):
+        joueur.live -= 1   

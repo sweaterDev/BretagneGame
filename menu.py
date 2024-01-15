@@ -52,6 +52,10 @@ def main_menu():
                 if b_niveau_3.is_clicked(x,y):
                    niveau1 = Niveau(screen,10,40,60,"images\lv3_background.png","musique\musique_menu.mp3")
                    niveau1.run()
+                if b_quitter.is_clicked(x,y):
+                   music.stop()
+                   pygame.quit()
+                   sys.exit()
                    
             # Ici, ajoutez la logique pour les boutons du menu
 
