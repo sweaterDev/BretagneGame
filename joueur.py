@@ -1,4 +1,5 @@
 import pygame
+
 from pygame.sprite import *
 from SpriteSheet import SpriteSheet
 class Joueur:
@@ -7,6 +8,7 @@ class Joueur:
         self.images_droite = [pygame.transform.scale(pygame.image.load("images/player_d.png"),(200,130)), pygame.transform.scale(pygame.image.load("images/player_dd.png"),(200,130))]
         self.images_gauche = [pygame.transform.scale(pygame.image.load("images/player_g.png"),(200,130)),pygame.transform.scale(pygame.image.load("images/player_gg.png"),(200,130))]
         self.images_repos = [pygame.transform.scale(pygame.image.load("images/player_face.png"),(200,130)),pygame.transform.scale(pygame.image.load("images/player_face_saut_1.png"),(200,130))]  # Ajoutez d'autres images si nécessaire
+        self.vitesse_original = vitesse
         self.vitesse = vitesse
         self.saut = saut
         self.y_vitesse = 0
@@ -19,6 +21,28 @@ class Joueur:
         self.current_image = 0
         self.image = self.current_images[self.current_image]
         self.rect = self.image.get_rect(midbottom=position_initiale)
+       
+        
+        
+    def move_right(self):
+        self.vitesse = self.vitesse_original
+        self.rect.x += self.vitesse  # Déplace le joueur vers la droite
+        self.set_direction("droite")
+        self.update_animation()
+        
+
+    def move_left(self):
+        self.vitesse = self.vitesse_original
+        self.rect.x -= self.vitesse  # Déplace le joueur vers la gauche
+        self.set_direction("gauche")
+        self.update_animation()
+        
+        
+    def stop(self):
+        self.vitesse = 0
+        self.set_direction("stop")
+        self.update_animation()
+        
     def move(self, keys):
         moving = False
         if keys[pygame.K_LEFT] and self.rect.left > 0:
@@ -57,5 +81,7 @@ class Joueur:
             self.current_images = self.images_droite
         elif direction == "gauche":
             self.current_images = self.images_gauche
+        elif direction == "stop":
+            self.current_images = self.images_repos
         # Réinitialiser l'index de l'image pour commencer l'animation de la nouvelle direction
         self.current_image = 0

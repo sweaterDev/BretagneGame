@@ -2,16 +2,17 @@ import pygame
 import sys
 import random
 from Joueur  import Joueur
+import serial
 from objets.ObjetBonus import ObjetBonus
 from objets.ObjetMalus import ObjetMalus
 from objets.ObjetSpeciaux import ObjetSpeciaux
+
 
 class Niveau:
     def __init__(self, screen, player_speed, object_frequency, total_time, background_img_path, music_path):
         self.WIDTH, self.HEIGHT = screen.get_width(), screen.get_height()
         self.GROUND_HEIGHT = 0
-        self.FPS = 60
-
+        self.FPS = 30
         self.screen = screen  
         self.joueur = Joueur((self.WIDTH // 2, self.HEIGHT), player_speed, 20)
         self.object_frequency = object_frequency
@@ -30,6 +31,7 @@ class Niveau:
 
         self.font = pygame.font.Font(None, 36)
         self.pause = False
+        self.ser = serial.Serial('COM8', 115200)
 
     def run(self):
         pygame.mixer.music.load(self.music_path)
@@ -68,15 +70,37 @@ class Niveau:
             return ObjetMalus(position_initiale, vitesse)
         elif chosen_type == 'special':
             return ObjetSpeciaux(position_initiale, vitesse)
+    
         
     def show_pause_screen(self):
         pause_text = self.font.render("Jeu en pause. Appuyez sur 'p' pour continuer", True, self.WHITE)
         text_rect = pause_text.get_rect(center=(self.WIDTH/2, self.HEIGHT/2))  # Centrer le texte
         self.screen.blit(pause_text, text_rect)
         
+    def read_sensor(self):
+        if self.ser.in_waiting > 0:
+            line = self.ser.readline().decode('utf-8').rstrip()
+            if line:
+                try:
+                    return float(line)
+                except ValueError:
+                    print(f" de convertion : '{line}'n'est pas un float valide'")
+            return float(line)
+        return None
+        
     def update_game(self):
-        keys = pygame.key.get_pressed()
-        self.joueur.move(keys)
+        
+        distance = self.read_sensor()
+        if distance is not None:
+            print(distance)
+            if distance < 500.0:
+                self.joueur.move_right()
+            elif distance > 1000.0:
+                self.joueur.move_left()
+            elif distance>500.0 and distance<1000.0:
+                self.joueur.stop()
+            
+        
 
             # Gestion des objets
         self.object_counter += 1
@@ -119,3 +143,4 @@ class Niveau:
         
     def toggle_pause(self):
         self.pause = not self.pause
+    
