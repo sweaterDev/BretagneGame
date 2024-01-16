@@ -4,7 +4,7 @@ from pygame.mixer import *
 import threading
 from Button import Button
 from Niveau import Niveau
-
+from Cinematique import Cinematique
 # Initialisation de Pygame
 pygame.init()
 
@@ -46,6 +46,8 @@ def main_menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()
                 if b_niveau_1.is_clicked(x,y):
+                   c1= Cinematique()
+                   c1.play_cinematic(screen)
                    niveau1 = Niveau(screen,30,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
                    niveau1.run()
                 if b_niveau_2.is_clicked(x,y):

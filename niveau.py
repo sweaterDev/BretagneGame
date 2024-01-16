@@ -55,7 +55,7 @@ class Niveau:
                 self.show_pause_screen()
 
             self.render()
-            
+        self.close_port_serie()   
 
             
 
@@ -143,4 +143,5 @@ class Niveau:
         
     def toggle_pause(self):
         self.pause = not self.pause
-    
+    def close_port_serie(self):
+        self.ser.close()
