@@ -19,7 +19,7 @@ class Button():
         height = self.height
         text =self.text
         
-        font = pygame.font.Font(None, 36)
+        font = pygame.font.Font("eltirg__.ttf", 36)
         pygame.draw.rect(screen, background_color, [x, y, width, height])
         text_render = font.render(text, True, text_color)
         screen.blit(text_render, (x + (width - text_render.get_width()) // 2, y + (height - text_render.get_height()) // 2))

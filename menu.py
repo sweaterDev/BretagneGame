@@ -16,7 +16,7 @@ screen = pygame.display.set_mode((largeur_ecran,hauteur_ecran))
 background_menu = pygame.image.load("images\menu_background.png")
 background_img = pygame.transform.scale(background_menu, (hauteur_ecran,largeur_ecran))
 screen_size_x,screen_size_y = pygame.display.get_window_size()
-
+#Créeation des Boutton
 b_niveau_1 = Button(screen_size_x /2 - 200 /2, screen_size_y /2 - 50/2,300,50,"Niveau 1")
 b_niveau_2 = Button(screen_size_x /2 - 200 /2,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
 b_niveau_3 = Button(screen_size_x /2- 200 /2,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")

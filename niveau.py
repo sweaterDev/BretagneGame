@@ -40,8 +40,10 @@ class Niveau:
         while self.total_time > 0 and self.joueur.live > 0:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.close_port_serie()
                     pygame.quit()
                     sys.exit()
+                    
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:  # Utiliser 'p' pour basculer la pause
                         self.toggle_pause()
