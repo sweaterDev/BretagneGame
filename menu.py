@@ -9,8 +9,10 @@ from Niveau import Niveau
 pygame.init()
 
 # Création de la fenêtre de jeu
-screen = pygame.display.set_mode((1920, 1080),pygame.FULLSCREEN)
-
+info_ecran = pygame.display.Info()
+largeur_ecran = info_ecran.current_w
+hauteur_ecran = info_ecran.current_h
+screen = pygame.display.set_mode((largeur_ecran,hauteur_ecran))
 background_menu = pygame.image.load("images\menu_background.png")
 background_img = pygame.transform.scale(background_menu, (1920, 1080))
 screen_size_x,screen_size_y = pygame.display.get_window_size()
@@ -44,10 +46,10 @@ def main_menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()
                 if b_niveau_1.is_clicked(x,y):
-                   niveau1 = Niveau(screen,10,40,60,"images\lv1_background.png","musique\musique_menu.mp3")
+                   niveau1 = Niveau(screen,10,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
                    niveau1.run()
                 if b_niveau_2.is_clicked(x,y):
-                   niveau1 = Niveau(screen,10,40,60,"images\lv2_background.png","musique\musique_menu.mp3")
+                   niveau1 = Niveau(screen,10,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3")
                    niveau1.run()
                 if b_niveau_3.is_clicked(x,y):
                    niveau1 = Niveau(screen,10,40,60,"images\lv3_background.png","musique\musique_menu.mp3")
