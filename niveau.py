@@ -12,7 +12,7 @@ class Niveau:
     def __init__(self, screen, player_speed, object_frequency, total_time, background_img_path, music_path):
         self.WIDTH, self.HEIGHT = screen.get_width(), screen.get_height()
         self.GROUND_HEIGHT = 0
-        self.FPS = 30
+        self.FPS = 60
         self.screen = screen  
         self.joueur = Joueur((self.WIDTH // 2, self.HEIGHT), player_speed, 20)
         self.object_frequency = object_frequency

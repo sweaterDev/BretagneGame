@@ -13,14 +13,15 @@ info_ecran = pygame.display.Info()
 largeur_ecran = info_ecran.current_w
 hauteur_ecran = info_ecran.current_h
 screen = pygame.display.set_mode((largeur_ecran,hauteur_ecran))
-background_menu = pygame.image.load("images\menu_background.png")
+background_menu = pygame.image.load("images\menu2_background.png")
 background_img = pygame.transform.scale(background_menu, (hauteur_ecran,largeur_ecran))
 screen_size_x,screen_size_y = pygame.display.get_window_size()
+logo_jeu = pygame.transform.scale(pygame.image.load("images\menu2_background.png"),(1500,150))
 #Créeation des Boutton
-b_niveau_1 = Button(screen_size_x /2 - 200 /2, screen_size_y /2 - 50/2,300,50,"Niveau 1")
-b_niveau_2 = Button(screen_size_x /2 - 200 /2,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
-b_niveau_3 = Button(screen_size_x /2- 200 /2,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
-b_quitter = Button(100,  100, 200, 50,"Quitter")
+b_niveau_1 = Button(screen_size_x /2 - 75 /2, screen_size_y /2 - 50/2,300,50,"Niveau 1")
+b_niveau_2 = Button(screen_size_x /2 - 75 /2,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
+b_niveau_3 = Button(screen_size_x /2- 75 /2,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
+b_quitter = Button(100,  25, 200, 50,"Quitter")
 
 def play_music():
     pygame.mixer.music.load("musique\musique_menu.mp3")
@@ -33,10 +34,10 @@ music_thread.start()
 def main_menu():
     while True:
         screen.blit(background_menu, (0, 0))
-        b_niveau_1.draw_button(screen,(255, 255, 255),(0, 0, 0))
-        b_niveau_2.draw_button(screen,(255, 255, 255),(0, 0, 0))
-        b_niveau_3.draw_button(screen,(255, 255, 255),(0, 0, 0))
-        b_quitter.draw_button(screen, (255, 255, 255),(0, 0, 0))
+        b_niveau_1.draw_button(screen,(255, 255, 255),(237, 127, 16))
+        b_niveau_2.draw_button(screen,(255, 255, 255),(237, 127, 16))
+        b_niveau_3.draw_button(screen,(255, 255, 255),(237, 127, 16))
+        b_quitter.draw_button(screen, (255, 255, 255),(237, 127, 16))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -46,9 +47,9 @@ def main_menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()
                 if b_niveau_1.is_clicked(x,y):
-                   c1= Cinematique()
+                   c1= Cinematique("sons\cinematique_1.mp3",275000,"En 2063, 15 ans après le Grand Effondrement\nla Bretagne a retrouvé son indépendance\nperdue 531 ans auparavant.\nCependant, le Royaume Normand\nson éternel rival\nest plus menaçant que jamais.\nIl faudra donc vous battre afin de récupérer\nsuffisamment de ressources et repousser les envahisseurs.\nVous devez vous rendre à Nantes\nafin de reprendre la ville et commencer\nla réunification de la Bretagne !\nBonne chance. ")
                    c1.play_cinematic(screen)
-                   niveau1 = Niveau(screen,60,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
+                   niveau1 = Niveau(screen,70,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
                    niveau1.run()
                 if b_niveau_2.is_clicked(x,y):
                    niveau1 = Niveau(screen,20,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3")
