@@ -86,7 +86,7 @@ class Niveau:
         if chosen_type == 'bonus':
             return ObjetBonus(position_initiale, vitesse)
         elif chosen_type == 'malus':
-            return ObjetMalus(position_initiale, vitesse)
+            return ObjetMalus(position_initiale, vitesse,self.level_id)
         elif chosen_type == 'special':
             return ObjetSpeciaux(position_initiale, vitesse)
     

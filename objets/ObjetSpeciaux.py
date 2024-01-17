@@ -19,3 +19,4 @@ class ObjetSpeciaux(Objet):
             self.image = self.images[self.current_image]
     def action(self,joueur) :
         joueur.score += 20
+        joueur.appliquer_effet_vitesse(2, 5000)

@@ -21,6 +21,8 @@ class Joueur:
         self.image = self.current_images[self.current_image]
         self.rect = self.image.get_rect(midbottom=position_initiale)
         self.ecran_largeur = pygame.display.get_surface().get_width()
+        self.vitesse_temporaire = vitesse
+        self.temps_effet = 0
         
         
     def move_right(self):
@@ -50,9 +52,15 @@ class Joueur:
         screen.blit(self.image, self.rect)
 
     def update_animation(self):
+        now = pygame.time.get_ticks()
+        if now > self.temps_effet:
+            self.vitesse_temporaire = self.vitesse_original
         self.current_image = (self.current_image + 1) % len(self.current_images)
         self.image = self.current_images[self.current_image]
-
+        
+    def appliquer_effet_vitesse(self, multiplicateur, duree):
+        self.vitesse_temporaire = self.vitesse_original * multiplicateur
+        self.temps_effet = pygame.time.get_ticks() + duree
     
     def set_idle(self):
         self.current_images = self.images_repos
