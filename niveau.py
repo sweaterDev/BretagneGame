@@ -3,6 +3,9 @@ import sys
 import random
 import csv
 from Joueur  import Joueur
+from Cinematique import Cinematique
+from CinematiqueMortController import CinematiqueMortController
+from CinematiqueMort import CinematiqueMort
 import serial
 from objets.ObjetBonus import ObjetBonus
 from objets.ObjetMalus import ObjetMalus
@@ -23,6 +26,8 @@ class Niveau:
         self.level_id = level_id
         self.highscore_file = f"highscore.csv"
         self.highscore = self.lire_highscore()
+        self.cinematique_mort = CinematiqueMort(self.level_id)
+        
         # Couleurs
         self.WHITE = (255, 255, 255)
         
@@ -39,6 +44,7 @@ class Niveau:
         self.ser = serial.Serial('COM8', 115200)
 
     def run(self):
+       
         pygame.mixer.music.load(self.music_path)
         pygame.mixer.music.play(loops=-1)
 
@@ -62,6 +68,11 @@ class Niveau:
                 self.show_pause_screen()
 
             self.render()
+        if self.joueur.live ==0:
+             
+            self.close_port_serie()
+            self.cinematique_mort.play_cinematic(self.screen)
+            
         self.close_port_serie()
         self.verifier_et_maj_highscore(self.joueur.score)  
 
@@ -88,25 +99,30 @@ class Niveau:
     def read_sensor(self):
         if self.ser.in_waiting > 0:
             line = self.ser.readline().decode('utf-8').rstrip()
+
+        # Vérifier si la ligne n'est pas vide et représente un nombre
             if line:
                 try:
                     return float(line)
                 except ValueError:
-                    print(f" de convertion : '{line}'n'est pas un float valide'")
-            return float(line)
-        return None
+                    print(f"Erreur de conversion : '{line}' n'est pas un float valide.")
+                return None  # Retourner None si la conversion échoue
+
+        return None  # Retourner None si aucune donnée n'est en attente
+
         
     def update_game(self):
         
         distance = self.read_sensor()
         if distance is not None:
             print(distance)
-            if distance < 500.0:
+            if distance < 500.0 :
                 self.joueur.move_right()
-            elif distance > 750.0:
+            elif distance > 750. and distance <1500:
                 self.joueur.move_left()
-            elif distance>500.0 and distance<750.0:
+            else :
                 self.joueur.stop()
+                
             
         
 
@@ -181,5 +197,5 @@ class Niveau:
     def afficher_highscore(self, screen):
         font = pygame.font.Font(None, 36)  # Utilisez la police souhaitée
         highscore_text = font.render(f"Highscore: {self.highscore}", True, (255, 255, 255))  # Blanc
-        text_rect = highscore_text.get_rect(topright=(self.WIDTH - 10, 10))  # Position en haut à droite
+        text_rect = highscore_text.get_rect(topright=(self.WIDTH - 1310, 110))  # Position en haut à droite
         screen.blit(highscore_text, text_rect)

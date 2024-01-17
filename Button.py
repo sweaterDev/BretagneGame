@@ -10,9 +10,10 @@ class Button():
         self.width = width
         self.height = height
         self.text = text
+        self.rect = pygame.Rect(x, y, width, height)
     
       
-    def draw_button(self,screen,background_color,text_color):
+    def draw_button(self,screen,text_color):
         x = self.x
         y = self.y
         width = self.height
@@ -23,6 +24,6 @@ class Button():
         text_render = font.render(text, True, text_color)
         screen.blit(text_render, (x + (width - text_render.get_width()) // 2, y + (height - text_render.get_height()) // 2))
     
-    def is_clicked(self, x, y):
+    def is_clicked(self,pos):
         # Vérifiez si les coordonnées x, y sont à l'intérieur des limites du bouton
-        return (self.x <= x <= self.x + self.width) and (self.y <= y <= self.y + self.height)
+        return self.rect.collidepoint(pos)

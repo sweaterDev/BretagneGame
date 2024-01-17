@@ -20,21 +20,23 @@ class Joueur:
         self.current_image = 0
         self.image = self.current_images[self.current_image]
         self.rect = self.image.get_rect(midbottom=position_initiale)
-       
+        self.ecran_largeur = pygame.display.get_surface().get_width()
         
         
     def move_right(self):
-        self.vitesse = self.vitesse_original
-        self.rect.x += self.vitesse  # Déplace le joueur vers la droite
-        self.set_direction("droite")
-        self.update_animation()
+        if self.rect.right < self.ecran_largeur  :
+            self.vitesse = self.vitesse_original
+            self.rect.x += self.vitesse  # Déplace le joueur vers la droite
+            self.set_direction("droite")
+            self.update_animation()
         
 
     def move_left(self):
-        self.vitesse = self.vitesse_original
-        self.rect.x -= self.vitesse  # Déplace le joueur vers la gauche
-        self.set_direction("gauche")
-        self.update_animation()
+        if self.rect.left >0:
+            self.vitesse = self.vitesse_original
+            self.rect.x -= self.vitesse  # Déplace le joueur vers la gauche
+            self.set_direction("gauche")
+            self.update_animation()
         
         
     def stop(self):

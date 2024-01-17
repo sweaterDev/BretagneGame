@@ -40,10 +40,10 @@ def main_menu():
         screen.blit(Font,(screen_size_x /2 +400, screen_size_y /2 -50/2 +425))
         screen.blit(logo_jeu,(screen_size_x /2 +520 -300/2,screen_size_y /2 -300/2 -250))
         
-        b_niveau_1.draw_button(screen,(255, 255, 255),(255, 255, 255))
-        b_niveau_2.draw_button(screen,(255, 255, 255),(255, 255, 255))
-        b_niveau_3.draw_button(screen,(255, 255, 255),(255, 255, 255))
-        b_quitter.draw_button(screen, (255, 255, 255),(255, 255, 255))
+        b_niveau_1.draw_button(screen,(255, 255, 255))
+        b_niveau_2.draw_button(screen,(255, 255, 255))
+        b_niveau_3.draw_button(screen,(255, 255, 255))
+        b_quitter.draw_button(screen,(255, 255, 255))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -51,21 +51,21 @@ def main_menu():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                x,y = pygame.mouse.get_pos()
-                if b_niveau_1.is_clicked(x,y):
+                
+                if b_niveau_1.is_clicked(event.pos):
                    c1= Cinematique("sons\cinematique_1.mp3",275000,"En 2063, 15 ans après le Grand Effondrement\nla Bretagne a retrouvé son indépendance\nperdue 531 ans auparavant.\nCependant, le Royaume Normand\nson éternel rival\nest plus menacant que jamais.\nIl faudra donc vous battre afin de récupérer\nsuffisamment de ressources et repousser les envahisseurs.\nVous devez vous rendre à Nantes\nafin de reprendre la ville et commencer\nla réunification de la Bretagne\nBonne chance. ")
                    c1.play_cinematic(screen)
                    niveau1 = Niveau(screen,70,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3",1)
                    niveau1.run()
-                if b_niveau_2.is_clicked(x,y):
+                if b_niveau_2.is_clicked(event.pos):
                    c2= Cinematique("sons\cinematique_2.mp3",225000,"Nantes est enfin libre\nLa ville a été conquise\n et la province reprise au Royaume perfide\nMais ce n est que le début\nNotre Mont Saint-Michel\npendant longtemps souillé par nos ennemis\nest pret à tomber comme un fruit mur entre nos mains\nIl faut dans un premier temps\n traverser la foret de Brocéliande\noù des cuves de Calvados auraient été apercues.\nLa prudence est de mise. ")
                    c2.play_cinematic(screen) 
                    niveau1 = Niveau(screen,70,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3",2)
                    niveau1.run()
-                if b_niveau_3.is_clicked(x,y):
+                if b_niveau_3.is_clicked(event.pos):
                    niveau1 = Niveau(screen,70,40,60,"images\lv3_background.png","musique\musique_lvl3.mp3",3)
                    niveau1.run()
-                if b_quitter.is_clicked(x,y):
+                if b_quitter.is_clicked(event.pos):
                    music.stop()
                    pygame.quit()
                    sys.exit()
