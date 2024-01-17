@@ -16,12 +16,12 @@ screen = pygame.display.set_mode((largeur_ecran,hauteur_ecran))
 background_menu = pygame.image.load("images\menu2_background.png")
 background_img = pygame.transform.scale(background_menu, (hauteur_ecran,largeur_ecran))
 screen_size_x,screen_size_y = pygame.display.get_window_size()
-logo_jeu = pygame.transform.scale(pygame.image.load("images\menu2_background.png"),(1500,150))
+logo_jeu = pygame.transform.scale(pygame.image.load("images\logo_jeu.png"),(300,300))
 #Créeation des Boutton
-b_niveau_1 = Button(screen_size_x /2 - 75 /2, screen_size_y /2 - 50/2,300,50,"Niveau 1")
-b_niveau_2 = Button(screen_size_x /2 - 75 /2,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
-b_niveau_3 = Button(screen_size_x /2- 75 /2,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
-b_quitter = Button(100,  25, 200, 50,"Quitter")
+b_niveau_1 = Button(screen_size_x /2 + 500 , screen_size_y /2 - 50/2,300,50,"Niveau 1")
+b_niveau_2 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
+b_niveau_3 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
+b_quitter = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +350, 300, 50,"Quitter")
 
 def play_music():
     pygame.mixer.music.load("musique\musique_menu.mp3")
@@ -34,10 +34,12 @@ music_thread.start()
 def main_menu():
     while True:
         screen.blit(background_menu, (0, 0))
-        b_niveau_1.draw_button(screen,(255, 255, 255),(237, 127, 16))
-        b_niveau_2.draw_button(screen,(255, 255, 255),(237, 127, 16))
-        b_niveau_3.draw_button(screen,(255, 255, 255),(237, 127, 16))
-        b_quitter.draw_button(screen, (255, 255, 255),(237, 127, 16))
+        screen.blit(logo_jeu,(screen_size_x /2 +520 -300/2,screen_size_y /2 -300/2 -250))
+        
+        b_niveau_1.draw_button(screen,(255, 255, 255),(255, 255, 255))
+        b_niveau_2.draw_button(screen,(255, 255, 255),(255, 255, 255))
+        b_niveau_3.draw_button(screen,(255, 255, 255),(255, 255, 255))
+        b_quitter.draw_button(screen, (255, 255, 255),(255, 255, 255))
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

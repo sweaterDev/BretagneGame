@@ -24,7 +24,7 @@ class Niveau:
 
         # Chargement et redimensionnement des images
         self.background_img = pygame.transform.scale(pygame.image.load(background_img_path), (self.WIDTH, self.HEIGHT))
-        self.life_img = pygame.transform.scale(pygame.image.load("images/life.png"), (80, 80))
+        self.life_img = pygame.transform.scale(pygame.image.load("images/life_def.png"), (80, 80))
 
         self.objects = []
         self.object_counter = 0
