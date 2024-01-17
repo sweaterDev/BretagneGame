@@ -48,7 +48,7 @@ def main_menu():
                 if b_niveau_1.is_clicked(x,y):
                    c1= Cinematique()
                    c1.play_cinematic(screen)
-                   niveau1 = Niveau(screen,30,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
+                   niveau1 = Niveau(screen,60,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
                    niveau1.run()
                 if b_niveau_2.is_clicked(x,y):
                    niveau1 = Niveau(screen,20,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3")

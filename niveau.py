@@ -97,9 +97,9 @@ class Niveau:
             print(distance)
             if distance < 500.0:
                 self.joueur.move_right()
-            elif distance > 1000.0:
+            elif distance > 750.0:
                 self.joueur.move_left()
-            elif distance>500.0 and distance<1000.0:
+            elif distance>500.0 and distance<750.0:
                 self.joueur.stop()
             
         
