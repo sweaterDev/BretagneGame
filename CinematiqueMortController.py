@@ -1,17 +1,9 @@
-import pygame
-
-
-
-        
 
 class CinematiqueMortController:
-    def __init__(self,):
+    def __init__(self):
     
         pass
         
-
-    
-
     def retry_level(self,screen,level_id):
         from Niveau import Niveau
         # Importer Niveau ici pour éviter l'importation circulaire

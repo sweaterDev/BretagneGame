@@ -63,6 +63,8 @@ def main_menu():
                    niveau1 = Niveau(screen,70,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3",2)
                    niveau1.run()
                 if b_niveau_3.is_clicked(event.pos):
+                   c3 = Cinematique("sons\cinematique_3.mp3",125000,"Nous avons maintenant acquis suffisamment de ressources\npour pouvoir assiéger le Mont.\nVolez les ressources des Normands\net chassez-les de nos terres\nSi vous réussissez\nles portes de la Normandie nous seront alors ouvertes.")
+                   c3.play_cinematic(screen)
                    niveau1 = Niveau(screen,70,40,60,"images\lv3_background.png","musique\musique_lvl3.mp3",3)
                    niveau1.run()
                 if b_quitter.is_clicked(event.pos):
