@@ -22,6 +22,8 @@ b_niveau_1 = Button(screen_size_x /2 + 500 , screen_size_y /2 - 50/2,300,50,"Niv
 b_niveau_2 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +100,300,50,"Niveau 2")
 b_niveau_3 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
 b_quitter = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +350, 300, 50,"Quitter")
+Font2_render = pygame.font.Font("Kemco.ttf", 22)
+Font = Font2_render.render("© 2024 ESIEE-iT", True, (255, 255, 255))
 
 def play_music():
     pygame.mixer.music.load("musique\musique_menu.mp3")
@@ -33,7 +35,9 @@ music_thread.start()
 
 def main_menu():
     while True:
+        
         screen.blit(background_menu, (0, 0))
+        screen.blit(Font,(screen_size_x /2 +400, screen_size_y /2 -50/2 +425))
         screen.blit(logo_jeu,(screen_size_x /2 +520 -300/2,screen_size_y /2 -300/2 -250))
         
         b_niveau_1.draw_button(screen,(255, 255, 255),(255, 255, 255))
@@ -49,15 +53,17 @@ def main_menu():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 x,y = pygame.mouse.get_pos()
                 if b_niveau_1.is_clicked(x,y):
-                   c1= Cinematique("sons\cinematique_1.mp3",275000,"En 2063, 15 ans après le Grand Effondrement\nla Bretagne a retrouvé son indépendance\nperdue 531 ans auparavant.\nCependant, le Royaume Normand\nson éternel rival\nest plus menaçant que jamais.\nIl faudra donc vous battre afin de récupérer\nsuffisamment de ressources et repousser les envahisseurs.\nVous devez vous rendre à Nantes\nafin de reprendre la ville et commencer\nla réunification de la Bretagne !\nBonne chance. ")
+                   c1= Cinematique("sons\cinematique_1.mp3",275000,"En 2063, 15 ans après le Grand Effondrement\nla Bretagne a retrouvé son indépendance\nperdue 531 ans auparavant.\nCependant, le Royaume Normand\nson éternel rival\nest plus menacant que jamais.\nIl faudra donc vous battre afin de récupérer\nsuffisamment de ressources et repousser les envahisseurs.\nVous devez vous rendre à Nantes\nafin de reprendre la ville et commencer\nla réunification de la Bretagne\nBonne chance. ")
                    c1.play_cinematic(screen)
-                   niveau1 = Niveau(screen,70,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3")
+                   niveau1 = Niveau(screen,70,40,60,"images\lv1_background.png","musique\musique_lvl1.mp3",1)
                    niveau1.run()
                 if b_niveau_2.is_clicked(x,y):
-                   niveau1 = Niveau(screen,20,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3")
+                   c2= Cinematique("sons\cinematique_2.mp3",225000,"Nantes est enfin libre\nLa ville a été conquise\n et la province reprise au Royaume perfide\nMais ce n est que le début\nNotre Mont Saint-Michel\npendant longtemps souillé par nos ennemis\nest pret à tomber comme un fruit mur entre nos mains\nIl faut dans un premier temps\n traverser la foret de Brocéliande\noù des cuves de Calvados auraient été apercues.\nLa prudence est de mise. ")
+                   c2.play_cinematic(screen) 
+                   niveau1 = Niveau(screen,70,40,60,"images\lv2_background.png","musique\musique_lvl2.mp3",2)
                    niveau1.run()
                 if b_niveau_3.is_clicked(x,y):
-                   niveau1 = Niveau(screen,10,40,60,"images\lv3_background.png","musique\musique_menu.mp3")
+                   niveau1 = Niveau(screen,70,40,60,"images\lv3_background.png","musique\musique_lvl3.mp3",3)
                    niveau1.run()
                 if b_quitter.is_clicked(x,y):
                    music.stop()

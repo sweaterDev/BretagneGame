@@ -15,8 +15,8 @@ class Cinematique:
         font = pygame.font.Font("eltirg__.ttf", 36)
         lines = self.text.split('\n')  # Diviser le texte en lignes
 
-        skip_text = font.render("Appuyez sur ESPACE pour passer", True, (255, 255, 255))
-        skip_text_rect = skip_text.get_rect(center=(self.screen_size_x - 500, self.screen_size_y - 200))
+        
+        
 
         # Position de départ pour le premier texte
         start_y = self.screen_size_y
@@ -42,7 +42,7 @@ class Cinematique:
                 text_surface = font.render(line, True, (255, 255, 255))
                 text_rect = text_surface.get_rect(center=(self.screen_size_x / 2, start_y + y_offset))
                 screen.blit(text_surface, text_rect)
-                y_offset += text_surface.get_height() + 5  # Espacement entre les lignes
+                y_offset += text_surface.get_height() + 7  # Espacement entre les lignes
 
             start_y -= 0.1  # Vitesse de défilement
             if start_y < -y_offset or current_time - start_time > self.duration:  # 10 secondes par exemple

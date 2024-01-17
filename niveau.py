@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import csv
 from Joueur  import Joueur
 import serial
 from objets.ObjetBonus import ObjetBonus
@@ -9,7 +10,7 @@ from objets.ObjetSpeciaux import ObjetSpeciaux
 
 
 class Niveau:
-    def __init__(self, screen, player_speed, object_frequency, total_time, background_img_path, music_path):
+    def __init__(self, screen, player_speed, object_frequency, total_time, background_img_path, music_path,level_id):
         self.WIDTH, self.HEIGHT = screen.get_width(), screen.get_height()
         self.GROUND_HEIGHT = 0
         self.FPS = 60
@@ -19,8 +20,12 @@ class Niveau:
         self.total_time = total_time
         self.music_path = music_path
         self.start_ticks = pygame.time.get_ticks()
+        self.level_id = level_id
+        self.highscore_file = f"highscore.csv"
+        self.highscore = self.lire_highscore()
         # Couleurs
         self.WHITE = (255, 255, 255)
+        
 
         # Chargement et redimensionnement des images
         self.background_img = pygame.transform.scale(pygame.image.load(background_img_path), (self.WIDTH, self.HEIGHT))
@@ -57,7 +62,8 @@ class Niveau:
                 self.show_pause_screen()
 
             self.render()
-        self.close_port_serie()   
+        self.close_port_serie()
+        self.verifier_et_maj_highscore(self.joueur.score)  
 
             
 
@@ -137,6 +143,8 @@ class Niveau:
             # Affichage du score
         score_text = self.font.render(f"Score: {self.joueur.score}", True, self.WHITE)
         self.screen.blit(score_text, (80, 70))
+        
+        self.afficher_highscore(self.screen)
             
         for i in range(self.joueur.live):
             self.screen.blit(self.life_img, (self.WIDTH - 120 - i * 100, 10))
@@ -147,3 +155,31 @@ class Niveau:
         self.pause = not self.pause
     def close_port_serie(self):
         self.ser.close()
+        
+    def lire_highscore(self):
+        try:
+            with open(self.highscore_file, mode='r', newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                next(reader)  # Ignorer l'en-tête
+                for row in reader:
+                    if row[0] == str(self.level_id):
+                        return int(row[1])
+            return 0
+        except FileNotFoundError:
+            return 0
+
+    def sauvegarder_highscore(self, score):
+        with open(self.highscore_file, mode='w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['Niveau', 'Score'])
+            writer.writerow([self.level_id, score])
+    def verifier_et_maj_highscore(self, nouveau_score):
+        if nouveau_score > self.highscore:
+            self.highscore = nouveau_score
+            self.sauvegarder_highscore(nouveau_score)
+    
+    def afficher_highscore(self, screen):
+        font = pygame.font.Font(None, 36)  # Utilisez la police souhaitée
+        highscore_text = font.render(f"Highscore: {self.highscore}", True, (255, 255, 255))  # Blanc
+        text_rect = highscore_text.get_rect(topright=(self.WIDTH - 10, 10))  # Position en haut à droite
+        screen.blit(highscore_text, text_rect)
