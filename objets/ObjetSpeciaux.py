@@ -3,11 +3,11 @@ from pygame.sprite import *
 from .Objet import Objet
 class ObjetSpeciaux(Objet):
     def __init__(self, position_initiale, vitesse):
-        self.images = [pygame.image.load(f"images/triskel_{i}.png") for i in range(1, 9)]
+        self.images = [pygame.image.load(f"triskel/frame-{i}.png") for i in range(1, 50)]
         super().__init__(self.images[0], position_initiale, vitesse)
         self.son = pygame.mixer.Sound("sons/ponus.mp3")
         self.current_image = 0
-        self.animation_time = 1000  # Temps en millisecondes pour changer d'image
+        self.animation_time = 100  # Temps en millisecondes pour changer d'image
         self.last_update = pygame.time.get_ticks()
     def update(self):
         super().update()
