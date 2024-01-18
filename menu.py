@@ -23,7 +23,7 @@ b_niveau_2 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +100,300,50,"N
 b_niveau_3 = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +200, 300, 50,"Niveau 3")
 b_quitter = Button(screen_size_x /2 +500 ,screen_size_y /2 -50/2 +350, 300, 50,"Quitter")
 Font2_render = pygame.font.Font("Kemco.ttf", 22)
-Font = Font2_render.render("© 2024 ESIEE-iT", True, (255, 255, 255))
+Font = Font2_render.render("© 2024 Lancelot", True, (255, 255, 255))
 
 def play_music():
     pygame.mixer.music.load("musique\musique_menu.mp3")

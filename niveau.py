@@ -58,6 +58,9 @@ class Niveau:
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:  # Utiliser 'p' pour basculer la pause
                         self.toggle_pause()
+                    elif event.key == pygame.K_ESCAPE :
+                        self.close_port_serie()
+                        return
                     
             if not self.pause:
             # Mettre à jour le jeu si ce n'est pas en pause
@@ -118,7 +121,7 @@ class Niveau:
             print(distance)
             if distance < 500.0 :
                 self.joueur.move_right()
-            elif distance > 750. and distance <1500:
+            elif distance > 750.0 and distance <1500:
                 self.joueur.move_left()
             else :
                 self.joueur.stop()
